@@ -1,0 +1,25 @@
+---------------------------------------- CÁC BƯỚC TIẾN HÀNH THỰC HIỆN PROJECT --------------------------------------------------------------
+
+NOTE: 
+- Cách thức thực hiện project dưới đây dựa trên các bước thực hiện đề tài luận văn tốt nghiệp 2022 - "Phát triển hệ thống phân loại xoài dựa
+vào đặc trưng bên ngoài" do 2 sinh viên Xuân Thịnh và Chí Linh thực hiện.
+- Các bước thực hiện là cố định, nhương phương thức thực hiện có thể tối ưu lại tùy theo nhu cầu của hệ thống. Một số phương thức thực
+hiện dưới đây chưa thực sự tốt và cần được tối ưu.
+
+1/ CALIB CAMERA:
+- Chuẩn bị bàn cờ vua (Không cần xác định kích thước từng ô).
+- Đặt bàn cơ vua vào ROI của Camera và tiến hành chụp ảnh.
+- Căn chỉnh độ sáng vùng ROI.
+- Trước khi chụp bàn cờ cần hiệu chỉnh lấy nét và chỉnh độ sáng của camera bằng phần mềm pylon Viewer. Sau đó xuất và lưu lại file config.
+- Chụp khoảng 5-10 ảnh bàn cờ tại nhiều vị trí và quay nhiều hướng khác nhau.
+- Sử dụng hàm <calibCam> trong module Basler.py để xử lý bộ ảnh bàn cờ và xuất ra các file config "Matrix.csv" và "Distort.csv".
+- Các file config trên cần được lưu lại và import vào hàm <undistortImg> trong module Basler để chống bóp méo hình ảnh.
+
+2/ XÁC ĐỊNH DIỆN TÍCH CỦA MỖI ĐIỂM ẢNH:
+- In bàn cờ vua, có kích thước các ô cờ được xác định trước.
+- Đặt mẫu giấy tại các vị trí có độ cao khác nhau so với bề mặt đặt xoài: Chiều rộng trung bình, Độ dày trung bình, 1/2 Chiều rộng trung bình
+và 1/2 độ dày trung bình.
+- Xác định diện tích trung bình của mỗi điểm ảnh tại các độ cao khác nhau bằng cách chia diện tích thực của mỗi ô cờ cho số lượng điểm ảnh trong
+mỗi ô cờ.
+
+3/ THỰC HIỆN XỬ LÝ VIDEO XOÀI HOẶC XỬ LÝ TRỰC TIẾP

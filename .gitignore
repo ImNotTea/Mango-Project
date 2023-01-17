@@ -1,0 +1,6 @@
+# File này dùng để bỏ qua (ignore) các file hình ảnh và video, không up chúng lên
+# kho chứa của git. Git chỉ nên lưu trữ các file text và code.
+
+*.png
+*.jpg
+*.avi

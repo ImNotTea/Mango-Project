@@ -1,0 +1,3 @@
+- List ảnh bàn cờ này được chụp thô (bị bóp méo), sau đó mới được xử lý chống bóp méo hình ảnh.
+- Cần áp dụng phương pháp chống bóp méo hình ảnh (trong file Basler.py) trong lúc chụp để có bộ ảnh tốt hơn.
+- Cần thay bàn cờ bằng những ô vuông đen đặt rời rạc đều nhau (dễ dàng lấy contours do các hình vuông không bị dính vào nhau).
