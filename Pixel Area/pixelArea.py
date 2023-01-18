@@ -13,8 +13,8 @@ trong các ô cờ của ảnh bàn cờ đầu vào.'''
 
 # Khởi tạo biến và đường dẫn
 # Truyền vào đường dẫn ảnh bàn cờ đã được xử lý bóp méo, biến dạng
-imgPath = "Pixel Area/Checkerboard Nov_22/Undistort Checkerboard"
-imgName = "Checkerboard_80.png"
+imgPath = "Pixel Area/Old System Sep_22/Crop CB"
+imgName = "cropedCB_36.png"
 
 # Đọc ảnh đầu vào
 rawCB = cv2.imread(f"{imgPath}/{imgName}")

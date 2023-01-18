@@ -19,7 +19,7 @@ if not len(videoList):
 # Chương trình chính
 for videoPath in videoList:
     video = cv2.VideoCapture(videoPath)
-
+ 
     if not video.isOpened():
         sys.exit("Cannot read the video")
 
