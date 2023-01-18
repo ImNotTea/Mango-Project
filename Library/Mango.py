@@ -48,7 +48,7 @@ class Mango:
         scaleRate = 0.125
 
         # Xác định kích thước vùng quan tâm
-        w, h = self.__roiSize
+        h, w = self.__roiSize
 
         # Xác định kích thước khung hình gốc
         H, W = frame.shape[:2]
@@ -58,7 +58,7 @@ class Mango:
 
         # Lấy ngưỡng
         _, thresh = cv2.threshold(grayFrame, threshCont, 255, cv2.THRESH_BINARY)
-        
+
         # Thu nhỏ ảnh ngưỡng
         scaledThresh = ProLib.scale(thresh, scaleRate) # Thu nhỏ 1:8
 
@@ -123,43 +123,49 @@ class Mango:
     #           cropMask  - Mặt nạ tách xoài, cũng là ảnh nhị phân tiết diện bề mặt xoài
     def rmBackground(self, inWorkingArea):
         # Khởi tạo
-        # Đầu vào của method này luôn là phần tử cuối cùng của mảng chứa vùng quan tâm
-        frame = self.__roi[-1]
-
-        # Khử nhiễu
-        blurFrame = cv2.blur(frame, (5,5))
-
-        # Chuyển hệ màu của frame từ RGB sang Gray
-        frameLAB = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2LAB)
-
-        # Lấy ảnh nhị phân bằng filter LAB
-        threshLAB = cv2.inRange(frameLAB, self.__lowerLAB, self.__upperLAB)
-        
-        # Trích xuất ảnh nhị phân tiết diện bề mặt xoài để tạo mặt nạ crop xoài
-        cont, _ = cv2.findContours(threshLAB, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        cropMask = np.zeros_like(threshLAB)
-
-        for cnt in cont:
-            if cv2.contourArea(cnt) > self.__minArea:
-                cv2.drawContours(cropMask, [cnt], 0, 255, -1)
-
-        rmbgFrame = cv2.bitwise_and(frame, frame, mask=cropMask)
-
-        # Tính toán và lưu trữ
+        # Chỉ tiến hành xử lý khi xoài trong vùng làm việc
         if inWorkingArea:
+            frame = self.__roi[-1]
+
+            # Khử nhiễu
+            blurFrame = cv2.blur(frame, (5,5))
+
+            # Chuyển hệ màu của frame từ RGB sang Gray
+            frameLAB = cv2.cvtColor(blurFrame, cv2.COLOR_BGR2LAB)
+
+            # Lấy ảnh nhị phân bằng filter LAB
+            threshLAB = cv2.inRange(frameLAB, self.__lowerLAB, self.__upperLAB)
+            
+            # Trích xuất ảnh nhị phân tiết diện bề mặt xoài để tạo mặt nạ crop xoài
+            cont, _ = cv2.findContours(threshLAB, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+            cropMask = np.zeros_like(threshLAB)
+
+            for cnt in cont:
+                if cv2.contourArea(cnt) > self.__minArea:
+                    cv2.drawContours(cropMask, [cnt], 0, 255, -1)
+
+            rmbgFrame = cv2.bitwise_and(frame, frame, mask=cropMask)
+
+            # Tính toán và lưu trữ
             self.__rmBG.append(rmbgFrame)
             self.__area.append(cv2.countNonZero(cropMask))
             self.__fg.append(cropMask)
 
-        return rmbgFrame, cropMask
+            return rmbgFrame, cropMask
+
+        else:
+            # Trả về ảnh trống khi xoài ngoài vùng làm việc
+            blank = np.zeros((self.__roiSize[0], self.__roiSize[1], 3), np.uint8)
+            return blank, blank
 
     # Xác định 4 mặt xoài
+    # showFigure: True khi cần show biểu đồ, ngược lại False
     # figurePath: Đường dẫn lưu biểu đồ về diện tích bề mặt xoài
     # qua từng khung hình. Nếu không truyền đường dẫn vào, phương thức này chỉ 
     # xuất biểu đồ ra màn hình mà không lưu lại. Tên biểu đồ cần kêt thúc bằng .png hoặc .jpg
     # output: bigIdx    - Chỉ số mảng của 2 mặt cạnh
     #         smallIdx  - Chỉ số mảng của mặt lưng và bụng
-    def detectMainFaces(self, figurePath=None):
+    def detectMainFaces(self, showFigure = False, figurePath=None):
         # Tính giá trị trung bình động của bộ dữ liệu về diện tích bề mặt xoài trong từng khung hình
         movingAvg = []
         window = 7
@@ -241,7 +247,8 @@ class Mango:
             plt.savefig(figurePath)
 
         # Xuất biểu đồ ra màn hình
-        plt.show()
+        if showFigure == True:
+            plt.show()
         plt.close()
 
         # Xác định các mặt chính của quả xoài

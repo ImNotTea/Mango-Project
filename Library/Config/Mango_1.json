@@ -1,8 +1,7 @@
-
 {
     "Breed": "cat Hoa Loc",
     "Type": "New system - No tape",
-    "ROI Size": [320, 540],
+    "ROI Size": [540, 320],
     "Tracking Thresh": 80,
     "LAB Filter": { "Upper": [250, 130, 250],
                     "Lower": [10,   0,  140]},

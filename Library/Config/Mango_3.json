@@ -1,0 +1,20 @@
+
+{
+    "Breed": "cat Hoa Loc",
+    "Type": "Old system - Tape",
+    "ROI Size": [400, 350],
+    "Tracking Thresh": 140,
+    "LAB Filter": { "Upper": [250, 250, 250],
+                    "Lower": [30,   0,  150]},
+    "Min Area": 1000,
+    "Rotated": 0,
+    "ClipLimit Clahe": 3, 
+    "GridSize Clahe": [10, 10],
+    "ROI Kernel Size": [9, 9],
+    "Min Area of Defect": 300,
+    "Small Face Const": [0.0725, 0.0984],
+    "Big Face Const": [0.0795, 0.1025],
+    "Display Type": 1,
+    "Font Size 1": 1.2,
+    "Font Size 2": 0.7
+}

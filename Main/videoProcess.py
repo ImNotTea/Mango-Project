@@ -10,7 +10,7 @@ from Library.MangoFace import MangoFace
 from Library import ProLib
 
 # List video xoài
-videoList = glob.glob("Input Source/Mango Video/Mango 26.11.22/New System/No Tape/*.avi")
+videoList = glob.glob("Input Source/Mango Video/Mango 26.11.22/Old System/Tape/*.avi")
 
 # Kiểm tra đường dẫn và list video
 if not len(videoList):
@@ -24,7 +24,7 @@ for videoPath in videoList:
         sys.exit("Cannot read the video")
 
     # Tạo Object cho mỗi quả xoài
-    confPath = "Library/Config/Mango_1.json" # Đường dẫn file config (chóng bóp méo ảnh).
+    confPath = "Library/Config/Mango_3.json" # Đường dẫn file config (chóng bóp méo ảnh).
     mango1 = Mango(confPath)
 
     # Thu thập và xử lý các khung hình
@@ -43,9 +43,9 @@ for videoPath in videoList:
             rmbgFrame, cropMask = mango1.rmBackground(inWorkingZone)
             
             # Xuất kết quả tiền xử lý ra màn hình
+            display = ProLib.stackImages([tracked, rmbgFrame], 0)
             cv2.imshow("Frame", roiFrame)
-            cv2.imshow("Tracked Mango", tracked)
-            cv2.imshow("Remove BG", rmbgFrame)
+            cv2.imshow("Display", display)
 
             # Xử lý nút nhấn
             key = cv2.waitKey(20)
@@ -64,14 +64,14 @@ for videoPath in videoList:
             cv2.destroyAllWindows()
             break
 
-    # 
+    # Xử lý nút nhấn
     if key == ord('q'): 
         continue
     if key == ord('s'):
         break
 
     # Xác định 4 mặt xoài
-    bigFaces, smallFaces = mango1.detectMainFaces()
+    bigFaces, smallFaces = mango1.detectMainFaces(False)
 
     # Tạo 4 objects tương đương với 4 mặt xoài
     bigFace1 = MangoFace(bigFaces[0], 0, confPath)
