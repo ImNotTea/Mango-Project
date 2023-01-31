@@ -32,4 +32,3 @@ REMOTE REPOSITORY:
 >> git branch push <Tên remote repo> <Tên local branch> - Push nội dung của branch lên remote repo. Việc push này sẽ auto tạo ra 1
                                                           request trên GitHub. Request này chỉ có host mới có quyền merge vào nhánh
                                                           chính của chương trình. Khuyến khích sử dụng cách này để phát triển code.
->> hello - Xin chao
