@@ -1,0 +1,34 @@
+------------------------------------------------ GIT COMMANDS ------------------------------------------------
+
+I/ LOCAL REPOSITORY:
+
+1/ Các thao tác cơ bản:
+>> git init - Khởi tạo repo trong máy tính cá nhân.
+>> git config --global user.name "Tên người dùng" - Khởi tạo tên người dùng (cho mọi repo trong máy tính cá nhân).
+>> git config --global user.email "Email người dùng" - Khởi tạo email người dùng (cho mọi repo trong máy tính cá nhân).
+>> git add <Tên file> - Add file vào staging area (sẵn sàng commit).
+>> git commit -m "Ghi chú" - Commit các thay đổi (đã được add vào staging area) vào local repo.
+
+2/ Làm việc với nhánh (branch):
+>> git branch - Kiểm tra list các branch tồn tại và vị trí hiện tại.
+>> git branch <Tên branch> -  Tạo branch mới có nội dung tương tự branch hiện tại.
+>> git branch -d <Tên branch> - Xóa branch khi không sử dụng nữa (Chỉ thực hiện được khi branch này đã được merge vào branch master).
+>> git branch -D <Tên branch> - Buộc xóa branch mà không cần biết branch này đã được merge vào branch master hay chưa.
+>> git branch merge <Tên branch> - Branch hiện tại sẽ được đồng bộ các nội dung và lịch sử commit với branch <Tên branch>.
+>> git branch checkout <Tên branch> - Chuyển đến branch chỉ định.
+
+3/ Lưu trữ tạm thời (Stash):
+>> git stash save "Ghi chú" - Lưu lại trạng thái hiện tại (tạm thời) để chuyển sang branch làm việc khác mà không gây bất cứ ảnh hưởng gì.
+>> git stash list - Hiển thị các stash đã lưu kèm theo index và ghi chú tương ứng.
+>> git stash apply "stash@{index}" - Apply lại trạng thái làm việc đã lưu với hệ số (index) tương ứng.
+>> git stash clear - Xóa toàn bộ lịch sử lưu trữ trên stash. 
+ 
+REMOTE REPOSITORY:
+>> git clone <URL của remote repo> - Copy nội dung của một repo trên GitHub về local repo.
+>> git remote add <Tên remote repo> <URL của remote repo> - Thêm liên kết với remote repo. Tên remote repo nên được đặt là "origin".
+>> git pull <Tên remote repo> <Tên branch> - Pull các thay đổi và lịch sử commit trên remote repo về local repo.
+>> git branch -a - Kiểm tra tất cả các branch đang tồn tại (cả local và remote repo).
+>> git branch checkout <Tên remote branch> - Tạo 1 branch tại local repo và copy các nội dung của branch cùng tên trên remote repo.
+>> git branch push <Tên remote repo> <Tên local branch> - Push nội dung của branch lên remote repo. Việc push này sẽ auto tạo ra 1
+                                                          request trên GitHub. Request này chỉ có host mới có quyền merge vào nhánh
+                                                          chính của chương trình. Khuyến khích sử dụng cách này để phát triển code.
