@@ -78,17 +78,18 @@ def drawROI(frame, roi, inWorkingArea, thickness=1):
     return res
 
 # Ghép nhiều ảnh thành 1 ảnh
-# @ imgList: Mảng chứa các bức ảnh cần được ghép.
+# @ *imgs: Ảnh truyền vào, không giới hạn số lượng ảnh truyền vào.
+# Node: *imgs là một biến đặc biệt, tìm hiểu thêm với từ khóa: *args và **kwargs.
 # @ mode: mode = 0 --> Ghép các ảnh thành hàng ngang.
 #         mode - 1 --> Ghép các ảnh thành cột dọc.
-def stackImages(imgList, mode):
+def stackImages(*imgs, mode):
     # Khởi tạo các biến
     width = []
     height = []
     image = []
 
     # Lưu kích thước của từng ảnh trong mảng.
-    for img in imgList:
+    for img in imgs:
         width.append(img.shape[1])
         height.append(img.shape[0])
     
@@ -97,7 +98,7 @@ def stackImages(imgList, mode):
     maxH = max(height)
 
     # Kiểm tra chế độ hoạt động.
-    for element in imgList:
+    for element in imgs:
         if mode == 0: # Ảnh được ghép thành hàng.
             expandingH = maxH-element.shape[0]
             borderImg = cv2.copyMakeBorder(element, expandingH, 0, 0, 0, cv2.BORDER_CONSTANT)

@@ -43,7 +43,7 @@ for videoPath in videoList:
             rmbgFrame, cropMask = mango1.rmBackground(inWorkingZone)
             
             # Xuất kết quả tiền xử lý ra màn hình
-            display = ProLib.stackImages([tracked, rmbgFrame], 0)
+            display = ProLib.stackImages(tracked, rmbgFrame, mode=0)
             cv2.imshow("Frame", roiFrame)
             cv2.imshow("Display", display)
 
